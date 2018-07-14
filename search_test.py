@@ -1,12 +1,16 @@
 import requests
+import settings
 
-API_key = 'AIzaSyAIYQvQ91H5Xq2C-sh4xvJXWQ0sgLjy_3E'
-cx = '007389025395420730419:n932aqs69xm'
-query = 'concert'
 
-URL = 'https://www.googleapis.com/customsearch/v1?key=' + API_key + '&cx=' + cx + '&q=' + query
+URL = 'https://www.googleapis.com/customsearch/v1?key=' + settings.API_key + '&cx=' + settings.cx + '&q='
 
-#print(URL)
+def search_f(search_q):
+    r=requests.get(URL + search_q).json()
 
-r = requests.get(URL)
-print(r.content)
+    for names in r['items']:
+        print(names['title'], names['link'])
+
+print('Input search term(s): ')
+search = str(input())
+
+search_f(search)
